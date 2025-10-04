@@ -9,19 +9,6 @@
 	</style>
 </head>
 <body>
-	<h2>1) Mudar cor do parágrafo</h2>
-	<form>
-		<button type="button" onclick="mudarCor('red')">Vermelho</button>
-		<button type="button" onclick="mudarCor('green')">Verde</button>
-		<button type="button" onclick="mudarCor('blue')">Azul</button>
-		<button type="button" onclick="mudarCor('yellow')">Amarelo</button>
-	</form>
-	<p id="paragrafo1">Texto para mudar de cor.</p>
-	<script>
-		function mudarCor(cor) {
-			document.getElementById('paragrafo1').style.color = cor;
-		}
-	</script>
 
 	<h2>2) Mudar cor do fundo com links</h2>
 	<a href="#" onmouseover="document.body.style.backgroundColor='red'" onmouseout="document.body.style.backgroundColor='white'">Vermelho</a> |
@@ -30,17 +17,8 @@
 	<a href="#" onmouseover="document.body.style.backgroundColor='yellow'" onmouseout="document.body.style.backgroundColor='white'">Amarelo</a>
 	<br><br>
 
-	<h2>4) Ocultar/Mostrar parágrafo</h2>
-	<button onclick="toggleParagrafo()">Ocultar/Mostrar</button>
-	<p id="paragrafo2">Este parágrafo pode ser ocultado ou mostrado.</p>
-	<script>
-		function toggleParagrafo() {
-			const p = document.getElementById('paragrafo2');
-			p.style.display = (p.style.display === 'none') ? 'block' : 'none';
-		}
-	</script>
 
-	<h2>5) Cadastro de Usuário</h2>
+	<h2>4) Cadastro de Usuário</h2>
 	<form id="formUsuario" onsubmit="return validarUsuario()">
 		Login: <input type="text" id="login"><br>
 		Senha: <input type="password" id="senha"><br>
@@ -69,20 +47,7 @@
 		}
 	</script>
 
-	<h2>6) Verificar Palíndromo</h2>
-	<input type="text" id="palindromoInput">
-	<button onclick="verificarPalindromo()">Verificar</button>
-	<p id="palindromoResultado"></p>
-	<script>
-		function verificarPalindromo() {
-			const palavra = document.getElementById('palindromoInput').value.toLowerCase();
-			const invertida = palavra.split('').reverse().join('');
-			document.getElementById('palindromoResultado').textContent =
-				palavra && palavra === invertida ? 'É palíndromo!' : 'Não é palíndromo!';
-		}
-	</script>
-
-	<h2>7) Inverter nomes</h2>
+	<h2>6) Inverter nomes</h2>
 	<form id="formNomes" onsubmit="return inverterNomes()">
 		<input type="text" id="nome1" placeholder="Nome 1">
 		<input type="text" id="nome2" placeholder="Nome 2">
@@ -100,33 +65,7 @@
 		}
 	</script>
 
-	<h2>8) Validação de CPF</h2>
-	<form onsubmit="return validarCPF()">
-		CPF: <input type="text" id="cpfInput" maxlength="14" placeholder="xxx.xxx.xxx-xx">
-		<button type="submit">Validar</button>
-	</form>
-	<p id="cpfResultado"></p>
-	<script>
-		function validarCPF() {
-			let cpf = document.getElementById('cpfInput').value.replace(/[^\d]+/g,'');
-			let resultado = document.getElementById('cpfResultado');
-			if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
-				resultado.textContent = 'CPF inválido!';
-				return false;
-			}
-			let soma = 0, resto;
-			for (let i=1; i<=9; i++) soma += parseInt(cpf.substring(i-1,i))* (11-i);
-			resto = (soma*10)%11; if (resto===10||resto===11) resto=0;
-			if (resto !== parseInt(cpf.substring(9,10))) { resultado.textContent = 'CPF inválido!'; return false; }
-			soma=0;
-			for (let i=1; i<=10; i++) soma += parseInt(cpf.substring(i-1,i))*(12-i);
-			resto = (soma*10)%11; if (resto===10||resto===11) resto=0;
-			resultado.textContent = (resto === parseInt(cpf.substring(10,11))) ? 'CPF válido!' : 'CPF inválido!';
-			return false;
-		}
-	</script>
-
-	<h2>9) Intercalar palavras</h2>
+	<h2>8) Intercalar palavras</h2>
 	<form onsubmit="return intercalarPalavras()">
 		Palavra 1: <input type="text" id="palavra1">
 		Palavra 2: <input type="text" id="palavra2">
@@ -147,35 +86,7 @@
 		}
 	</script>
 
-	<h2>10) Operações com três números</h2>
-	<form onsubmit="return mostrarTabelaNumeros()">
-		<input type="number" id="num1" required>
-		<input type="number" id="num2" required>
-		<input type="number" id="num3" required>
-		<button type="submit">Calcular</button>
-	</form>
-	<div id="tabelaNumeros"></div>
-	<script>
-		function mostrarTabelaNumeros() {
-			const n1 = Number(document.getElementById('num1').value);
-			const n2 = Number(document.getElementById('num2').value);
-			const n3 = Number(document.getElementById('num3').value);
-			const soma = n1+n2+n3, media = soma/3, prod = n1*n2*n3;
-			const maior = Math.max(n1,n2,n3), menor = Math.min(n1,n2,n3);
-			document.getElementById('tabelaNumeros').innerHTML =
-				`<table>
-					<tr><th>Números</th><td>${n1}, ${n2}, ${n3}</td></tr>
-					<tr><th>Soma</th><td>${soma}</td></tr>
-					<tr><th>Média</th><td>${media.toFixed(2)}</td></tr>
-					<tr><th>Produto</th><td>${prod}</td></tr>
-					<tr><th>Maior</th><td>${maior}</td></tr>
-					<tr><th>Menor</th><td>${menor}</td></tr>
-				</table>`;
-			return false;
-		}
-	</script>
-
-	<h2>11) Tabuada de multiplicação</h2>
+	<h2>10) Tabuada de multiplicação</h2>
 	<form onsubmit="return mostrarTabuada()">
 		<input type="number" id="tabuadaNum" required>
 		<button type="submit">Mostrar Tabuada</button>
@@ -194,52 +105,37 @@
 		}
 	</script>
 
-	<h2>12) Buscar e destacar palavra</h2>
-	<form onsubmit="return buscarPalavra()">
-		<input type="text" id="buscaPalavra">
-		<button type="submit">Pesquisar</button>
-	</form>
-	<div id="textoBusca">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-	</div>
-	<p id="buscaResultado"></p>
-	<script>
-		function buscarPalavra() {
-			const palavra = document.getElementById('buscaPalavra').value.trim();
-			const textoDiv = document.getElementById('textoBusca');
-			const texto = textoDiv.textContent;
-			if (!palavra) return false;
-			const regex = new RegExp(`(${palavra})`, 'gi');
-			const ocorrencias = texto.match(regex);
-			if (ocorrencias) {
-				textoDiv.innerHTML = texto.replace(regex, '<span class="highlight">$1</span>');
-				document.getElementById('buscaResultado').textContent = `Ocorrências: ${ocorrencias.length}`;
-			} else {
-				textoDiv.innerHTML = texto;
-				document.getElementById('buscaResultado').textContent = 'Nenhum resultado encontrado.';
-			}
-			return false;
-		}
-	</script>
 
-	<h2>13) Data por extenso</h2>
-	<form onsubmit="return dataPorExtenso()">
-		<input type="text" id="dataInput" placeholder="dd/mm/aaaa">
+	<h2>12) Data por extenso</h2>
+	<form onsubmit="return mostrarDataExtenso()">
+		<input type="text" id="dataInput" placeholder="dd/mm/aaaa" maxlength="10">
 		<button type="submit">Converter</button>
 	</form>
-	<p id="dataExtenso"></p>
+	<p id="dataExtensoResultado"></p>
 	<script>
-		function dataPorExtenso() {
-			const meses = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
-			const data = document.getElementById('dataInput').value.split('/');
-			if (data.length === 3) {
-				const dia = data[0], mes = meses[parseInt(data[1])-1], ano = data[2];
-				document.getElementById('dataExtenso').textContent = `${dia} de ${mes} de ${ano}`;
-			} else {
-				document.getElementById('dataExtenso').textContent = 'Formato inválido!';
+		function mostrarDataExtenso() {
+			const meses = [
+				'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+				'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+			];
+			const valor = document.getElementById('dataInput').value.trim();
+			const partes = valor.split('/');
+			if (partes.length !== 3) {
+				document.getElementById('dataExtensoResultado').textContent = 'Formato inválido!';
+				return false;
 			}
+			const [dia, mes, ano] = partes;
+			const numMes = parseInt(mes, 10);
+			if (
+				isNaN(numMes) || numMes < 1 || numMes > 12 ||
+				isNaN(parseInt(dia)) || isNaN(parseInt(ano)) ||
+				dia.length !== 2 || mes.length !== 2 || ano.length !== 4
+			) {
+				document.getElementById('dataExtensoResultado').textContent = 'Formato inválido!';
+				return false;
+			}
+			document.getElementById('dataExtensoResultado').textContent =
+				`${dia} de ${meses[numMes-1]} de ${ano}`;
 			return false;
 		}
 	</script>
-</body>
-</html></div></form>
