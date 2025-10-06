@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Exercícios de JavaScript</title>
+	<style>
+		.highlight { background: yellow; }
+		.section { border: 1px solid #ccc; margin: 16px 0; padding: 12px; border-radius: 8px; }
+		.section h2 { margin-top: 0; }
+		table, th, td { border: 1px solid #333; border-collapse: collapse; padding: 4px; }
+	</style>
+</head>
+<body>
+	
+	<div class="section">
+		<h2>1) Mudar cor do parágrafo</h2>
+		<button onclick="mudarCor('red')">Vermelho</button>
+		<button onclick="mudarCor('green')">Verde</button>
+		<button onclick="mudarCor('blue')">Azul</button>
+		<button onclick="mudarCor('yellow')">Amarelo</button>
+		<p id="texto">Este texto pode mudar de cor</p>
+
+		<script>
+			function mudarCor(cor) {
+  			document.getElementById("texto").style.color = cor;
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>2) Mudar cor do fundo com mouseover</h2>
+		<a href="#" onmouseover="document.body.style.backgroundColor='red'" onmouseout="document.body.style.backgroundColor=''">Vermelho</a> |
+		<a href="#" onmouseover="document.body.style.backgroundColor='green'" onmouseout="document.body.style.backgroundColor=''">Verde</a> |
+		<a href="#" onmouseover="document.body.style.backgroundColor='blue'" onmouseout="document.body.style.backgroundColor=''">Azul</a> |
+		<a href="#" onmouseover="document.body.style.backgroundColor='yellow'" onmouseout="document.body.style.backgroundColor=''">Amarelo</a>
+	</div>
+
+	<div class="section">
+		<h2>4) Ocultar/Mostrar parágrafo</h2>
+		<button onclick="toggleParagrafo()" id="btnToggle">Ocultar/Mostrar</button>
+		<p id="paragrafo2">Este parágrafo pode ser ocultado ou mostrado.</p>
+
+		<script>
+			function toggleParagrafo() {
+			const p = document.getElementById('paragrafo2');
+			p.style.display = (p.style.display === 'none') ? 'block' : 'none';
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>5)Formulário de login</h2>
+		<form onsubmit="return validar()">
+			<label>Login:</label><br>
+			<input type="text" id="login"><br><br>
+			<label>Senha:</label><br>
+			<input type="password" id="senha"><br><br>
+			<label>Confirmar senha:</label><br>
+			<input type="password" id="confirmar"><br><br>
+  			<button type="submit">Cadastrar</button>
+		</form>
+
+		<script>
+			function validar() {
+			let login = document.getElementById("login").value;
+			let senha = document.getElementById("senha").value;
+			let confirmar = document.getElementById("confirmar").value;
+			if (!login || !senha || !confirmar) {
+				alert("Preencha todos os campos");
+				return false;
+			}
+			if (senha.length < 6 || senha.length > 10) {
+				alert("A senha deve ter entre 6 e 10 caracteres");
+				return false;
+			}
+			if (senha !== confirmar) {
+				alert("As senhas não são iguais");
+				return false;
+			}
+			alert("Cadastro realizado com sucesso!");
+			return true;
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>6) Verificar palíndromo</h2>
+		<input type="text" id="palindromoInput" placeholder="Digite uma palavra">
+		<button onclick="verificarPalindromo()">Verificar</button>
+		<p id="palindromoResultado"></p>
+
+		<script>
+			function verificarPalindromo() {
+			const palavra = document.getElementById('palindromoInput').value.trim().toLowerCase();
+			const resultado = document.getElementById('palindromoResultado');
+			if (!palavra) {
+				resultado.textContent = 'Digite uma palavra.';
+				return;
+			}
+			const invertida = palavra.split('').reverse().join('');
+			resultado.textContent = (palavra === invertida) ? 'É palíndromo!' : 'Não é palíndromo.';
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>7) Inverter nomes</h2>
+		<form>
+			<input type="text" id="n1" placeholder="Nome 1"><br><br>
+			<input type="text" id="n2" placeholder="Nome 2"><br><br>
+			<input type="text" id="n3" placeholder="Nome 3"><br><br>
+			<input type="text" id="n4" placeholder="Nome 4"><br><br>
+			<input type="text" id="n5" placeholder="Nome 5"><br><br>
+			<button type="button" onclick="inverter()">Inverter</button>
+		</form>
+
+		<script>
+			function inverter() {
+			let nomes = [
+				document.getElementById("n1").value,
+				document.getElementById("n2").value,
+				document.getElementById("n3").value,
+				document.getElementById("n4").value,
+				document.getElementById("n5").value
+			];
+			nomes.reverse();
+			document.getElementById("n1").value = nomes[0];
+			document.getElementById("n2").value = nomes[1];
+			document.getElementById("n3").value = nomes[2];
+			document.getElementById("n4").value = nomes[3];
+			document.getElementById("n5").value = nomes[4];
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>8) Validação de CPF</h2>
+		<form onsubmit="return validarCPF()">
+			<input type="text" id="cpf" placeholder="Digite o CPF">
+			<button type="submit">Validar</button>
+		</form>
+		<p id="cpfResultado"></p>
+
+		<script>
+			function validarCPF() {
+			const cpf = document.getElementById('cpf').value.replace(/\D/g, '');
+			const res = document.getElementById('cpfResultado');
+			if (cpf.length !== 11 || /^([0-9])\1+$/.test(cpf)) {
+				res.textContent = 'CPF inválido.';
+				return false;
+			}
+			let soma = 0, resto;
+			for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1, i)) * (11 - i);
+			resto = (soma * 10) % 11;
+			if (resto === 10 || resto === 11) resto = 0;
+			if (resto !== parseInt(cpf.substring(9, 10))) {
+				res.textContent = 'CPF inválido.';
+				return false;
+			}
+			soma = 0;
+			for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1, i)) * (12 - i);
+			resto = (soma * 10) % 11;
+			if (resto === 10 || resto === 11) resto = 0;
+			if (resto !== parseInt(cpf.substring(10, 11))) {
+				res.textContent = 'CPF inválido.';
+				return false;
+			}
+			res.textContent = 'CPF válido!';
+			return false;
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>9) Intercalar palavras</h2>
+		<form>
+			<label for="p1">Palavra 1:</label><br>
+			<input type="text" id="p1"><br><br>
+			<label for="p2">Palavra 2:</label><br>
+			<input type="text" id="p2"><br><br>
+			<label for="resultado">Resultado:</label><br>
+			<input type="text" id="resultado" disabled><br><br>
+			<button type="button" onclick="intercalar()">Intercalar</button>
+		</form>
+
+		<script>
+			function intercalar() {
+			let p1 = document.getElementById("p1").value;
+			let p2 = document.getElementById("p2").value;
+			let resultado = "";
+
+			let max = Math.max(p1.length, p2.length);
+
+			for (let i = 0; i < max; i++) {
+				if (p1[i]) resultado += p1[i];
+				if (p2[i]) resultado += p2[i];
+			}
+
+			document.getElementById("resultado").value = resultado;
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>10) Operações com 3 números</h2>
+		<input type="number" id="num1" placeholder="Número 1">
+		<input type="number" id="num2" placeholder="Número 2">
+		<input type="number" id="num3" placeholder="Número 3">
+		<button onclick="operacoesNumeros()">Calcular</button>
+		<div id="tabelaNumeros"></div>
+
+		<script>
+			function operacoesNumeros() {
+			const n1 = Number(document.getElementById('num1').value);
+			const n2 = Number(document.getElementById('num2').value);
+			const n3 = Number(document.getElementById('num3').value);
+			if (isNaN(n1) || isNaN(n2) || isNaN(n3)) return;
+			const soma = n1 + n2 + n3;
+			const media = soma / 3;
+			const produto = n1 * n2 * n3;
+			const maior = Math.max(n1, n2, n3);
+			const menor = Math.min(n1, n2, n3);
+			document.getElementById('tabelaNumeros').innerHTML = `
+				<table>
+					<tr><th>Números</th><td>${n1}</td><td>${n2}</td><td>${n3}</td></tr>
+					<tr><th>Soma</th><td colspan="3">${soma}</td></tr>
+					<tr><th>Média</th><td colspan="3">${media.toFixed(2)}</td></tr>
+					<tr><th>Produto</th><td colspan="3">${produto}</td></tr>
+					<tr><th>Maior</th><td colspan="3">${maior}</td></tr>
+					<tr><th>Menor</th><td colspan="3">${menor}</td></tr>
+				</table>
+			`;
+		}
+		</script>
+	</div>
+	
+	<div class="section">
+		<h2>11) Tabela de multiplicação</h2>
+		<form onsubmit="return gerarTabuada()">
+			<label for="numero">Digite um número:</label><br>
+			<input type="number" id="numero"><br><br>
+			<button type="submit">Gerar Tabuada</button>
+		</form>
+		<br>
+		<table id="tabela" border="1" cellpadding="5"></table>
+
+		<script>
+			function gerarTabuada() {
+			let num = document.getElementById("numero").value;
+			let tabela = document.getElementById("tabela");
+			if (!num) {
+				alert("Digite um número");
+				return false;
+			}
+			tabela.innerHTML = ""; 
+			for (let i = 1; i <= 10; i++) {
+				let linha = `<tr><td>${num} x ${i}</td><td>${num * i}</td></tr>`;
+				tabela.innerHTML += linha;
+			}
+			return false;
+		}
+		</script>
+	</div>
+
+	<div class="section">
+		<h2>12) Buscar e destacar palavra</h2>
+		<form onsubmit="return buscarPalavra()">
+			<input type="text" id="buscaPalavra">
+			<button type="submit">Pesquisar</button>
+		</form>
+		<div id="textoBusca">
+			JavaScript é a linguagem de programação da web. Ele pode calcular, manipular e validar dados. Ele pode atualizar e alterar HTML e CSS.
+		</div>
+	
+		<p id="buscaResultado"></p>
+		<script>
+			function buscarPalavra() {
+				const palavra = document.getElementById('buscaPalavra').value.trim();
+				const textoDiv = document.getElementById('textoBusca');
+				const texto = textoDiv.textContent;
+				if (!palavra) return false;
+				const regex = new RegExp(`(${palavra})`, 'gi');
+				const ocorrencias = texto.match(regex);
+				if (ocorrencias) {
+					textoDiv.innerHTML = texto.replace(regex, '<span class="highlight">$1</span>');
+					document.getElementById('buscaResultado').textContent = `Ocorrências: ${ocorrencias.length}`;
+				} else {
+					textoDiv.innerHTML = texto;
+					document.getElementById('buscaResultado').textContent = 'Nenhum resultado encontrado.';
+				}
+				return false;
+			}
+		</script>
+	</div>
+	
+	<div class="section">
+		<h2>13) Data por extenso</h2>
+		<form onsubmit="return mostrarDataExtenso()">
+			<input type="text" id="dataInput" placeholder="dd/mm/aaaa" maxlength="10">
+			<button type="submit">Converter</button>
+		</form>
+		<p id="dataExtensoResultado"></p>
+
+		<script>
+			function mostrarDataExtenso() {
+			const meses = [
+				'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
+				'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
+			];
+			const valor = document.getElementById('dataInput').value.trim();
+			const partes = valor.split('/');
+			if (partes.length !== 3) {
+				document.getElementById('dataExtensoResultado').textContent = 'Formato inválido!';
+				return false;
+			}
+			const [dia, mes, ano] = partes;
+			const numMes = parseInt(mes, 10);
+			if (
+				isNaN(numMes) || numMes < 1 || numMes > 12 ||
+				isNaN(parseInt(dia)) || isNaN(parseInt(ano)) ||
+				dia.length !== 2 || mes.length !== 2 || ano.length !== 4
+			) {
+				document.getElementById('dataExtensoResultado').textContent = 'Formato inválido!';
+				return false;
+			}
+			document.getElementById('dataExtensoResultado').textContent =
+				`${dia} de ${meses[numMes-1]} de ${ano}`;
+			return false;
+		}
+		</script>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
